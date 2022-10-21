@@ -56,6 +56,18 @@
                 "description": "The number of nodes for the CPU compute train cluster"
             }
         },
+        "cpuPriority": {
+            "type": "string",
+            "metadata": {
+                "description": "The priority of the CPU compute train cluster"
+            }
+        },
+        "gpuPriority": {
+            "type": "string",
+            "metadata": {
+                "description": "The priority of the GPU compute train cluster"
+            }
+        },
         "datasetsAccountName": {
             "type": "string",
             "metadata": {
@@ -160,6 +172,9 @@
                     },
                     "vmSize": {
                         "value": "[parameters('cpuTrainComputeSize')]"
+                    },
+                    "vmPriority": {
+                        "value": "[parameters('cpuPriority')]"
                     }
                 }
             },
@@ -196,6 +211,9 @@
                     },
                     "vmSize": {
                         "value": "[parameters('gpuTrainComputeSize')]"
+                    },
+                    "vmPriority": {
+                        "value": "[parameters('gpuPriority')]"
                     }
                 }
             },

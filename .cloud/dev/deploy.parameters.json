@@ -23,6 +23,12 @@
         "gpuTrainNodeCount": {
             "value": 2
         },
+        "cpuPriority": {
+            "value": "LowPriority"
+        },
+        "gpuPriority": {
+            "value": "LowPriority"
+        },
         "datasetsResourceGroup": {
             "value": "edvanadlsg2"
         },
