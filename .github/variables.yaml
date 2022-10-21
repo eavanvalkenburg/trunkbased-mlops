@@ -1,7 +1,7 @@
-  WORKSPACENAME: mlw-trunkbased-dev
-  RESOURCEGROUPNAME: mlops-trunkbased-dev
-  STORAGEACCOUNTNAME: aamldatalake
-  LOCATION: eastus2
+  WORKSPACENAME: edvaneml-aml
+  RESOURCEGROUPNAME: edvaneml
+  STORAGEACCOUNTNAME: edvanadlsblob
+  LOCATION: westeurope
   KEYVAULTNAME: kv-trunkbased-dev
   ENVPREFIX: dev
   MODELNAME: hate-pt-speech
