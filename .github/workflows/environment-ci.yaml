@@ -38,7 +38,7 @@ jobs:
       - name: Building environment
         uses: ./.github/actions/aml-env-build
         with:
-          envFile: environments/*/environment.yml
+          envFile: .aml/environments/*/environment.yml
       
       - name: Ensuring environment
         uses: ./.github/actions/aml-env-ensure
