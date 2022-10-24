@@ -9,7 +9,6 @@ RESOURCE_GROUP=$3
 ARGS=$4
 SECRETS_TO_KEYVAULT=$5
 KEYVAULT_NAME=$6
-KEYVAULT_NAME=$6
 
 az configure --defaults workspace=$WORKSPACE_NAME group=$RESOURCE_GROUP
 
@@ -26,10 +25,14 @@ do
     yq -y "del(.traffic)" $ENDPOINT_FILE > $ENDPOINT_NAME.yml
 
     echo "::debug::Creating endpoint with name: $ENDPOINT_NAME"
-    if [[ $(az ml online-endpoint show -n $ENDPOINT_NAME) ]]; then
+    if [[ $(az ml online-endpoint show -n $ENDPOINT_NAME) ]]; 
+    then
         echo "::debug::Endpoint $ENDPOINT_NAME already exits. Creation skipped."
-        if [[ $(az ml online-endpoint show -n $ENDPOINT_NAME | yq .auth_mode) != "$ENDPOINT_AUTH" ]]; then
+        if [[ $(az ml online-endpoint show -n $ENDPOINT_NAME | yq .auth_mode) != "$ENDPOINT_AUTH" ]]; 
+        then
             echo "::warning file=$ENDPOINT_FILE::Endpoint $ENDPOINT_NAME indicates a different authentication method that requires redeployment."
+        else
+            az ml online-endpoint create -f $ENDPOINT_NAME.yml
         fi
     else
         az ml online-endpoint create -f $ENDPOINT_NAME.yml

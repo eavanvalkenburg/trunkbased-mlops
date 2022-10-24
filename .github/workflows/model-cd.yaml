@@ -30,7 +30,7 @@ jobs:
           minVersion: 2.0
           pythonTools: true
 
-      - name: Logining in into Azure
+      - name: Logging into Azure
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -111,7 +111,7 @@ jobs:
           minVersion: 2.0
           pythonTools: true
 
-      - name: Logining in into Azure
+      - name: Logging into Azure
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -163,7 +163,7 @@ jobs:
           minVersion: 2.0
           pythonTools: true
 
-      - name: Logining in into Azure
+      - name: Logging into Azure
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
