@@ -16,7 +16,7 @@ do
     DATASTORE_NAME=$(yq -r ".name" $DATASTORE_FILE)
     echo "::debug::DATASTORE_NAME=$DATASTORE_NAME"
 
-    if [[ $(az ml datastore list --query "[?name == $DATASTORE_NAME] | length(@)" ) -eq 1 ]]; then
+    if [[ $(az ml datastore list --query "[?name == '$DATASTORE_NAME'] | length(@)" ) -eq 1 ]]; then
         echo "::debug::Datastore $DATASTORE_NAME already in target workspace."
     else
         echo "::debug::Datastore $DATASTORE_NAME is missing. Creating from file $DATASTORE_FILE."

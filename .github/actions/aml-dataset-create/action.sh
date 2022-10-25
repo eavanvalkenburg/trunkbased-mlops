@@ -37,7 +37,7 @@ do
     echo "::debug::CONTAINER_NAME=$CONTAINER_NAME"
     echo "::debug::LOCAL_FOLDER=$LOCAL_FOLDER"
 
-    if [[ $(az ml data list --query "[?name == $DATASET_NAME] | length(@)") -eq 1 ]]; then
+    if [[ $(az ml data list --query "[?name == '$DATASET_NAME'] | length(@)") -eq 1 ]]; then
         echo "::debug::Dataset $DATASET_NAME already in target workspace."
     else
         echo "::debug::Dataset $DATASET_NAME is missing. Creating from file $DATASET_FILE."
