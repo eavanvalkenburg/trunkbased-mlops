@@ -1,5 +1,5 @@
 name: 'Registring datastores'
-description: 'Ensure that a given datastore exists in Azure Machine Learning Services. If the datastore doesnt exit, it is created and can be initialized with data which will be uploaded to Azure Storage accounts.'
+description: 'Ensure that a given datastore exists in Azure Machine Learning Services. If the datastore doesnt exit, it is created and can be used to create datasets.'
 
 inputs:
     datastoreFile:
