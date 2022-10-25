@@ -17,4 +17,4 @@ runs:
   steps:
     - name: Registring datastores
       shell: bash
-      run: . ${{ github.action_path }}/action.sh "${{ inputs.datasetFile }}" ${{ inputs.workspaceName }} ${{ inputs.resourceGroup }} 
+      run: . ${{ github.action_path }}/action.sh "${{ inputs.datastoreFile }}" ${{ inputs.workspaceName }} ${{ inputs.resourceGroup }} 

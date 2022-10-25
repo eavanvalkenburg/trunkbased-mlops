@@ -46,7 +46,7 @@ jobs:
         name: Workspaces - Datastore registration
         uses: ./.github/actions/aml-datastore-create
         with:
-          datasetFile: .aml/data/*/datastore.yml
+          datastoreFile: .aml/datastores/*/datastore.yml
           workspaceName: ${WORKSPACENAME}
           resourceGroup: ${RESOURCEGROUPNAME}
             
