@@ -8,6 +8,7 @@ INITIALIZE=$4
 INITIALIZE_WITH_DATA_PATH=$5
 STORAGE_ACCOUNT=$6
 
+echo "Looking for datasets definition at '$DATASET_FILE_PATH'"
 echo "::debug::Looking for datasets definition at '$DATASET_FILE_PATH'"
 DATASETS_FILES=$(find $DATASET_FILE_PATH;)
 
