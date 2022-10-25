@@ -5,10 +5,10 @@ DATASTORE_FILE_PATH=$1
 WORKSPACE_NAME=$2
 RESOURCE_GROUP=$3
 
-az configure --defaults workspace=$WORKSPACE_NAME group=$RESOURCE_GROUP
-
 echo "::debug::Looking for datastore definition at '$DATASTORE_FILE_PATH'"
 DATASTORES_FILES=$(find $DATASTORE_FILE_PATH;)
+
+az configure --defaults workspace=$WORKSPACE_NAME group=$RESOURCE_GROUP
 
 for DATASTORE_FILE in $DATASTORES_FILES
 do
