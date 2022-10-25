@@ -6,6 +6,7 @@ on:
     branches: [ main ]
     paths:
       - .aml/data/**
+      - .aml/datastores/**
       - .cloud/**
 
 jobs:
