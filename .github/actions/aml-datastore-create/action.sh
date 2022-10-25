@@ -1,10 +1,12 @@
 #!/bin/bash
+echo "Creating Datastores"
 echo $@
 
 DATASTORE_FILE_PATH=$1
 WORKSPACE_NAME=$2
 RESOURCE_GROUP=$3
 
+echo "Looking for datastore definition at '$DATASTORE_FILE_PATH'"
 echo "::debug::Looking for datastore definition at '$DATASTORE_FILE_PATH'"
 DATASTORES_FILES=$(find $DATASTORE_FILE_PATH;)
 
