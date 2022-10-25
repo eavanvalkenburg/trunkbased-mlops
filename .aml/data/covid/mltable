@@ -1,0 +1,8 @@
+$schema: https://azuremlschemas.azureedge.net/latest/MLTable.schema.json 
+
+paths:
+    - file: ./*
+
+transformations:
+  - read_parquet:
+        include_path_column: false

@@ -1,0 +1,20 @@
+name: 'Registring datastores'
+description: 'Ensure that a given datastore exists in Azure Machine Learning Services. If the datastore doesnt exit, it is created and can be initialized with data which will be uploaded to Azure Storage accounts.'
+
+inputs:
+    datastoreFile:
+      description: 'Datastore YAML definition file. Wildcard paths are supported.'
+      required: true
+    workspaceName:
+      description: 'Name of the workspace to work against.'
+      required: true
+    resourceGroup:
+      description: 'Name of the resource group where the workspace is placed.'
+      required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Registring datastores
+      shell: bash
+      run: . ${{ github.action_path }}/action.sh "${{ inputs.datasetFile }}" ${{ inputs.workspaceName }} ${{ inputs.resourceGroup }} 
