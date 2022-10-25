@@ -32,14 +32,14 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      
-      # - id: datastores_init
-      #   name: Workspaces - Datastore registration
-      #   uses: ./.github/actions/aml-datastore-create
-      #   with:
-      #     datastoreFile: .aml/datastores/*/datastore.yml
-      #     workspaceName: ${WORKSPACENAME}
-      #     resourceGroup: ${RESOURCEGROUPNAME}
+    
+      - id: datastores_init
+        name: Workspaces - Datastore registration
+        uses: ./.github/actions/aml-datastore-create
+        with:
+          datastoreFile: .aml/datastores/*/datastore.yml
+          workspaceName: ${WORKSPACENAME}
+          resourceGroup: ${RESOURCEGROUPNAME}
       
       - id: datasets_init
         name: Workspaces - Datasets initialization
