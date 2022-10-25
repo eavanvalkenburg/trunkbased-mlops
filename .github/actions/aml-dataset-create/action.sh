@@ -11,6 +11,8 @@ STORAGE_ACCOUNT=$6
 echo "::debug::Looking for datasets definition at '$DATASET_FILE_PATH'"
 DATASETS_FILES=$(find $DATASET_FILE_PATH;)
 
+az configure --defaults workspace=$WORKSPACE_NAME group=$RESOURCE_GROUP
+
 for DATASET_FILE in $DATASETS_FILES
 do
     echo "::debug::Working with dataset '$DATASET_FILE'"
@@ -35,11 +37,11 @@ do
     echo "::debug::CONTAINER_NAME=$CONTAINER_NAME"
     echo "::debug::LOCAL_FOLDER=$LOCAL_FOLDER"
 
-    if [[ $(az ml data list --name $DATASET_NAME --workspace-name $WORKSPACE_NAME --resource-group $RESOURCE_GROUP) ]]; then
+    if [[ $(az ml data list --query "[?name == $DATASET_NAME] | length(@)") -eq 1 ]]; then
         echo "::debug::Dataset $DATASET_NAME already in target workspace."
     else
         echo "::debug::Dataset $DATASET_NAME is missing. Creating from file $DATASET_FILE."
-        az ml data create --file $DATASET_FILE --resource-group $RESOURCE_GROUP --workspace-name $WORKSPACE_NAME
+        az ml data create --file $DATASET_FILE
         
         if $INITIALIZE; then
             # Data uploaded manually as AzureFileCopy@4 not supported in Linux
