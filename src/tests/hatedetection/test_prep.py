@@ -21,3 +21,4 @@ def test_split_to_sequence_len(data: pd.DataFrame):
                             seq_len=seq_len).explode()
 
     assert all(data_split['text'].str.len() <= seq_len)
+    
