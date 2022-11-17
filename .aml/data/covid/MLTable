@@ -3,9 +3,8 @@ $schema: https://azuremlschemas.azureedge.net/latest/MLTable.schema.json
 type: mltable
 
 paths:
-    - file: ./*
+    - pattern: ./*
 
 transformations:
   - read_delta_lake:
-      timestamp_as_of: '2022-08-26T00:00:00Z'
       
