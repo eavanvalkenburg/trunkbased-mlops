@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
 name: covid
-description: Dataset with covid data, needs to change to mltable delta def.
+description: Dataset with covid data in delta format.
 type: mltable
 path: azureml://datastores/edvanadlsblob_deltatest/paths/covid
 version: 1
