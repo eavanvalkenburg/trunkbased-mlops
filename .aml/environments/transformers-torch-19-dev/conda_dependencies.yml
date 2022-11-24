@@ -1,3 +1,4 @@
+name: transformers-torch-19-dev
 channels:
   - conda-forge
 dependencies:
