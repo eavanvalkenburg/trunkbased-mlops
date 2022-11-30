@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "westeurope"
+    },
+    "cpuTrainComputeSize": {
+      "value": "Standard_D4s_v3"
+    },
+    "gpuTrainComputeSize": {
+      "value": "Standard_NC6s_v3"
+    },
+    "cpuPriority": {
+      "value": "LowPriority"
+    },
+    "gpuPriority": {
+      "value": "LowPriority"
+    },
+    "deploy_databricks": {
+      "value": true
+    },
+    "pricingTier": {
+      "value": "premium"
+    },
+    "adbDisablePublicIp": {
+      "value": false
+    },
+    "projectName": {
+      "value": "edvantestml"
+    },
+    "cpuTrainNodeCount": {
+      "value": 4
+    },
+    "gpuTrainNodeCount": {
+      "value": 4
+    },
+    "computeAdminUserName": {
+      "value": "edvan"
+    },
+    "computeAdminUserPassword": {
+      "value": "Eduardvv1!"
+    }
+  }
+}

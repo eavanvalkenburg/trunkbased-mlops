@@ -4,7 +4,7 @@ targetScope = 'subscription'
 param projectName string
 
 @description('Specifies the location for all resources.')
-param location string
+param location string = 'westeurope'
 
 @description('The VM size for the CPU compute train cluster. More details can be found here: https://aka.ms/azureml-vm-details.')
 @allowed([
@@ -62,9 +62,27 @@ param computeAdminUserName string
 @secure()
 param computeAdminUserPassword string
 
+
+@description('Do you want a databricks workspace to be deployed as well?')
+param deploy_databricks bool = false
+
+@description('The pricing tier of workspace.')
+@allowed([
+  'standard'
+  'premium'
+])
+param pricingTier string = 'premium'
+
+@description('Specifies whether to deploy Azure Databricks workspace with Secure Cluster Connectivity (No Public IP) enabled or not')
+param adbDisablePublicIp bool = false
+
 var workspaceDeploymentName = 'azureml-${deployment().name}'
 var resourceGroupName = '${projectName}-rg'
 var workspaceName = '${projectName}-aml'
+var tagValues = {
+  workspace: workspaceName
+  project: projectName
+}
 
 
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -79,10 +97,7 @@ module workspaceDeployment 'workspace/workspace.bicep' = {
     projectName: projectName
     location: rg.location
     workspaceName: workspaceName
-    tagValues: {
-      workspace: workspaceName
-      project: projectName
-    }
+    tagValues: tagValues
   }
 }
 
@@ -91,7 +106,7 @@ module cpu_compute_workspaceDeployment 'workspace/compute/cluster.bicep' = {
   scope: rg
   params: {
     workspaceName: workspaceName
-    clusterName: 'cpu_cluster'
+    clusterName: 'cpu-cluster'
     location: rg.location
     maxNodeCount: cpuTrainNodeCount
     vmSize: cpuTrainComputeSize
@@ -109,7 +124,7 @@ module gpu_compute_workspaceDeployment 'workspace/compute/cluster.bicep' = {
   scope: rg
   params: {
     workspaceName: workspaceName
-    clusterName: 'gpu_cluster'
+    clusterName: 'gpu-cluster'
     location: rg.location
     maxNodeCount: gpuTrainNodeCount
     vmSize: gpuTrainComputeSize
@@ -120,4 +135,17 @@ module gpu_compute_workspaceDeployment 'workspace/compute/cluster.bicep' = {
   dependsOn: [
     workspaceDeployment
   ]
+}
+
+module databricks 'workspace/compute/databricks.bicep' = if (deploy_databricks) {
+  name: 'databricks-${workspaceDeploymentName}'
+  scope: rg
+  params: {
+    projectName: projectName
+    mlworkspace: workspaceDeployment.outputs.workspaceId
+    location: rg.location
+    pricingTier: pricingTier
+    disablePublicIp: adbDisablePublicIp
+    tagValues: tagValues
+  }
 }

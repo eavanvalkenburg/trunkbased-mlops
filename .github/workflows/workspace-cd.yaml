@@ -41,21 +41,21 @@
 #           templateFile: .cloud/templates/deploy.json
 #           parameters: .cloud/${ENVPREFIX}/deploy.parameters.json computeAdminUserName=${{ secrets.COMPUTEADMINUSERNAME }} computeAdminUserPassword=${{ secrets.COMPUTEADMINUSERPASSWORD }} datasetsClientId=${{ secrets.DATASETSCLIENTID }} datasetsClientSecret=${{ secrets.DATASETSCLIENTSECRET }} secretsManagementObjectId=${{ secrets.AUTOMATION_OBJECT_ID }}
 
-      # - id: datastores_init
-      #   name: Workspaces - Datastore registration
-      #   uses: ./.github/actions/aml-datastore-create
-      #   with:
-      #     datastoreFile: .aml/datastores/*/datastore.yml
-      #     workspaceName: ${WORKSPACENAME}
-      #     resourceGroup: ${RESOURCEGROUPNAME}
+#       - id: datastores_init
+#         name: Workspaces - Datastore registration
+#         uses: ./.github/actions/aml-datastore-create
+#         with:
+#           datastoreFile: .aml/datastores/*/datastore.yml
+#           workspaceName: ${WORKSPACENAME}
+#           resourceGroup: ${RESOURCEGROUPNAME}
       
-      # - id: datasets_init
-      #   name: Workspaces - Datasets initialization
-      #   uses: ./.github/actions/aml-dataset-create
-      #   with:
-      #     datasetFile: .aml/data/*/dataset.yml
-      #     initialize: true
-      #     initialDataPath: sample
-      #     storageAccount: ${STORAGEACCOUNTNAME}
-      #     workspaceName: ${WORKSPACENAME}
-      #     resourceGroup: ${RESOURCEGROUPNAME}
+#       - id: datasets_init
+#         name: Workspaces - Datasets initialization
+#         uses: ./.github/actions/aml-dataset-create
+#         with:
+#           datasetFile: .aml/data/*/dataset.yml
+#           initialize: true
+#           initialDataPath: sample
+#           storageAccount: ${STORAGEACCOUNTNAME}
+#           workspaceName: ${WORKSPACENAME}
+#           resourceGroup: ${RESOURCEGROUPNAME}

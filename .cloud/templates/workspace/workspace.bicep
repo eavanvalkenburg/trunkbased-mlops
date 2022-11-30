@@ -1,6 +1,7 @@
 param projectName string
 param workspaceName string
 param location string
+param tagValues object
 
 @description('Name of the storage account used for the workspace.')
 param storageAccountName string = replace(workspaceName, '-', '')
@@ -37,7 +38,6 @@ param cmk_keyvault string = ''
 
 @description('Specifies if the customer managed keyvault key uri.')
 param resource_cmk_uri string = ''
-param tagValues object
 
 var tenantId = subscription().tenantId
 
@@ -128,10 +128,10 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2022-10-01' = {
   }
   properties: {
     friendlyName: workspaceName
-    storageAccount: storageAccount.name
-    keyVault: keyVault.name
-    applicationInsights: applicationInsights.name
-    containerRegistry: (empty(containerRegistryName) ? json('null') : containerRegistry.name)
+    storageAccount: storageAccount.id
+    keyVault: keyVault.id
+    applicationInsights: applicationInsights.id
+    containerRegistry: (empty(containerRegistryName) ? json('null') : containerRegistry.id)
     description: 'Workspace for project: ${projectName}.'
     encryption: {
       status: encryption_status
@@ -144,3 +144,5 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2022-10-01' = {
   }
   tags: tagValues
 }
+
+output workspaceId string = workspace.id
