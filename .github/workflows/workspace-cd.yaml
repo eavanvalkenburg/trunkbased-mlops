@@ -41,6 +41,6 @@ jobs:
           rgTemplateFile: .cloud/templates/rg.bicep
           workspaceTemplateFile: .cloud/templates/main.bicep
           computeAdminUserName: ${{ secrets.COMPUTEADMINUSERNAME }}
-          computeAdminPassword: ${{ secrets.COMPUTEADMINUSERPASSWORD }}
+          computeAdminUserPassword: ${{ secrets.COMPUTEADMINUSERPASSWORD }}
           secretsManagementObjectId: ${{ secrets.AUTOMATION_OBJECT_ID }}
           parameters: .cloud/${ENVPREFIX}/deploy.parameters.json
