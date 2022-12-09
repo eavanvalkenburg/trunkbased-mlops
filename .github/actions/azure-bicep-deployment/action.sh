@@ -9,7 +9,7 @@ WORKSPACE_TEMPLATE_FILE=$5
 TEMPLATE_VERSION=$6
 PARAMETERS=$7
 
-echo $PARAMETERS
+echo "Parameters: $PARAMETERS"
 
 az deployment sub create \
     --location $LOCATION \
