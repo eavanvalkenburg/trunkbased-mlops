@@ -17,6 +17,15 @@ inputs:
   workspaceTemplateFile:
     description: 'Bicep template. This template will be created as a Template resource in the resource group mentioned.'
     required: true
+  computeAdminUserName:
+    description: 'user name for compute'
+    required: true
+  computeAdminUserPassword:
+    description: 'pw for compute'
+    required: true
+  secretsManagementObjectId:
+    description: 'secrets management id'
+    required: true  
   templateVersion:
     description: 'Version of the template your are creating.'
     required: false
@@ -29,14 +38,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: check params
-      shell: bash
-      run: |
-        echo Parameters: ${{ inputs.parameters }}
-        echo computeAdminUserName: ${{ secrets.COMPUTEADMINUSERNAME }}
     - name: Deploying Bicep templates
       shell: bash
-      run: . ${{ github.action_path }}/action.sh "${{ inputs.projectName }}" ${{ inputs.location }} ${{ inputs.deploymentName }} ${{ inputs.rgTemplateFile }} ${{ inputs.workspaceTemplateFile }} ${{ inputs.templateVersion }} ${{ inputs.parameters }}
+      run: . ${{ github.action_path }}/action.sh "${{ inputs.projectName }}" ${{ inputs.location }} ${{ inputs.deploymentName }} ${{ inputs.rgTemplateFile }} ${{ inputs.workspaceTemplateFile }} ${{ inputs.templateVersion }} "${{ inputs.parameters }} computeAdminUserName=${{ inputs.computeAdminUserName }} computeAdminUserPassword=${{ inputs.computeAdminUserPassword }} secretsManagementObjectId=${{ inputs.secretsManagementObjectId }}"
       # |
       #   echo ${{ inputs.location }}
       #   az deployment sub create \

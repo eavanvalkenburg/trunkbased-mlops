@@ -40,4 +40,7 @@ jobs:
           deploymentName: aml-deployment
           rgTemplateFile: .cloud/templates/rg.bicep
           workspaceTemplateFile: .cloud/templates/main.bicep
-          parameters: .cloud/${ENVPREFIX}/deploy.parameters.json computeAdminUserName=${{ secrets.COMPUTEADMINUSERNAME }} computeAdminUserPassword=${{ secrets.COMPUTEADMINUSERPASSWORD }} secretsManagementObjectId=${{ secrets.AUTOMATION_OBJECT_ID }}
+          computeAdminUserName: ${{ secrets.COMPUTEADMINUSERNAME }}
+          computeAdminPassword: ${{ secrets.COMPUTEADMINUSERPASSWORD }}
+          secretsManagementObjectId: ${{ secrets.AUTOMATION_OBJECT_ID }}
+          parameters: .cloud/${ENVPREFIX}/deploy.parameters.json
