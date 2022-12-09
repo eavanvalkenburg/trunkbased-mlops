@@ -46,6 +46,10 @@ param computeAdminUserName string
 @secure()
 param computeAdminUserPassword string
 
+@description('The object id for secrets management.')
+@secure()
+param secretsManagementObjectId string
+
 var workspaceDeploymentName = 'azureml-${deployment().name}'
 var workspaceName = '${projectName}-aml'
 
