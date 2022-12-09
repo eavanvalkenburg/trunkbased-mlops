@@ -36,3 +36,4 @@ else
                             --name deployment01 \
                             --template-spec $SPECIFICATION_ID/versions/$TEMPLATE_VERSION \
                             --parameters $PARAMETERS
+fi
