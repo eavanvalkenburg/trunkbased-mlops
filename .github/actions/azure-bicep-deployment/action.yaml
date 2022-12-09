@@ -29,6 +29,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: check params
+      shell: bash
+      run: |
+        echo Parameters: ${{ inputs.parameters }}
+        echo computeAdminUserName: ${{ secrets.COMPUTEADMINUSERNAME }}
     - name: Deploying Bicep templates
       shell: bash
       run: . ${{ github.action_path }}/action.sh "${{ inputs.projectName }}" ${{ inputs.location }} ${{ inputs.deploymentName }} ${{ inputs.rgTemplateFile }} ${{ inputs.workspaceTemplateFile }} ${{ inputs.templateVersion }} ${{ inputs.parameters }}
