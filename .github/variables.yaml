@@ -1,8 +1,6 @@
-  WORKSPACENAME: edvaneml-aml
-  RESOURCEGROUPNAME: edvaneml
-  STORAGEACCOUNTNAME: edvanadlsblob
+  PROJECTNAME: edvaneml
   LOCATION: westeurope
-  KEYVAULTNAME: kv-trunkbased-dev
+  KEYVAULTNAME: kv-edvaneml-dev
   ENVPREFIX: dev
   MODELNAME: hate-pt-speech
   DESCRIPTION: 'A hate detection model for tweets in portuguese'

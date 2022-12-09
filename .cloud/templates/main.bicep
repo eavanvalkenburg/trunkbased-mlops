@@ -1,10 +1,8 @@
-targetScope = 'subscription'
-
 @description('Name of the project, will feed into all other names.')
 param projectName string
 
 @description('Specifies the location for all resources.')
-param location string
+param location string = resourceGroup().location
 
 @description('The VM size for the CPU compute train cluster. More details can be found here: https://aka.ms/azureml-vm-details.')
 @allowed([
@@ -40,20 +38,6 @@ param cpuTrainNodeCount int
 @maxValue(12)
 param gpuTrainNodeCount int
 
-@description('The priority of the CPU compute train cluster, default is LowPriority.')
-@allowed([
-  'Dedicated'
-  'LowPriority'
-])
-param cpuPriority string = 'LowPriority'
-
-@description('The priority of the GPU compute train cluster, default is LowPriority.')
-@allowed([
-  'Dedicated'
-  'LowPriority'
-])
-param gpuPriority string = 'LowPriority'
-
 @description('The name of the administrator user account which can be used to SSH into nodes. It must only contain lower case alphabetic characters [a-z].')
 @secure()
 param computeAdminUserName string
@@ -63,21 +47,14 @@ param computeAdminUserName string
 param computeAdminUserPassword string
 
 var workspaceDeploymentName = 'azureml-${deployment().name}'
-var resourceGroupName = '${projectName}-rg'
 var workspaceName = '${projectName}-aml'
-
-
-resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: resourceGroupName
-  location: location
-}
 
 module workspaceDeployment 'workspace/workspace.bicep' = {
   name: workspaceDeploymentName
-  scope: rg
+  scope: resourceGroup()
   params: {
     projectName: projectName
-    location: rg.location
+    location: location
     workspaceName: workspaceName
     tagValues: {
       workspace: workspaceName
@@ -86,16 +63,52 @@ module workspaceDeployment 'workspace/workspace.bicep' = {
   }
 }
 
-module cpu_compute_workspaceDeployment 'workspace/compute/cluster.bicep' = {
-  name: 'cpu-compute-${workspaceDeploymentName}'
-  scope: rg
+module cpu_compute_workspaceDeployment_lp 'workspace/compute/cluster.bicep' = {
+  name: 'cpu-compute-${workspaceDeploymentName}-lowprio'
+  scope: resourceGroup()
   params: {
     workspaceName: workspaceName
     clusterName: 'cpu_cluster'
-    location: rg.location
+    location: location
     maxNodeCount: cpuTrainNodeCount
     vmSize: cpuTrainComputeSize
-    vmPriority: cpuPriority
+    vmPriority: 'LowPriority'
+    adminUserName: computeAdminUserName
+    adminUserPassword: computeAdminUserPassword
+  }
+  dependsOn: [
+    workspaceDeployment
+  ]
+}
+
+module gpu_compute_workspaceDeployment_lp 'workspace/compute/cluster.bicep' = {
+  name: 'gpu-compute-${workspaceDeploymentName}-lowprio'
+  scope: resourceGroup()
+  params: {
+    workspaceName: workspaceName
+    clusterName: 'gpu_cluster'
+    location: location
+    maxNodeCount: gpuTrainNodeCount
+    vmSize: gpuTrainComputeSize
+    vmPriority: 'LowPriority'
+    adminUserName: computeAdminUserName
+    adminUserPassword: computeAdminUserPassword
+  }
+  dependsOn: [
+    workspaceDeployment
+  ]
+}
+
+module cpu_compute_workspaceDeployment 'workspace/compute/cluster.bicep' = {
+  name: 'cpu-compute-${workspaceDeploymentName}-decicated'
+  scope: resourceGroup()
+  params: {
+    workspaceName: workspaceName
+    clusterName: 'cpu_cluster'
+    location: location
+    maxNodeCount: cpuTrainNodeCount
+    vmSize: cpuTrainComputeSize
+    vmPriority: 'Dedicated'
     adminUserName: computeAdminUserName
     adminUserPassword: computeAdminUserPassword
   }
@@ -105,15 +118,15 @@ module cpu_compute_workspaceDeployment 'workspace/compute/cluster.bicep' = {
 }
 
 module gpu_compute_workspaceDeployment 'workspace/compute/cluster.bicep' = {
-  name: 'gpu-compute-${workspaceDeploymentName}'
-  scope: rg
+  name: 'gpu-compute-${workspaceDeploymentName}-dedicated'
+  scope: resourceGroup()
   params: {
     workspaceName: workspaceName
     clusterName: 'gpu_cluster'
-    location: rg.location
+    location: location
     maxNodeCount: gpuTrainNodeCount
     vmSize: gpuTrainComputeSize
-    vmPriority: gpuPriority
+    vmPriority: 'Dedicated'
     adminUserName: computeAdminUserName
     adminUserPassword: computeAdminUserPassword
   }

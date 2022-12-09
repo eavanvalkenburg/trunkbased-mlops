@@ -2,13 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "value": "westeurope"
-        },
-        "workspaceName": {
-            "value": "edvaneml-aml"
-        },
-        "resourceGroupName": {
+        "projectName": {
             "value": "edvaneml"
         },
         "cpuTrainComputeSize": {
@@ -22,21 +16,6 @@
         },
         "gpuTrainNodeCount": {
             "value": 2
-        },
-        "cpuPriority": {
-            "value": "LowPriority"
-        },
-        "gpuPriority": {
-            "value": "LowPriority"
-        },
-        "datasetsResourceGroup": {
-            "value": "edvanadlsg2"
-        },
-        "datasetsAccountName": {
-            "value": "edvanadlsblob"
-        },
-        "datasetsFileSystem": {
-            "value": "trusted"
         }
     }
 }

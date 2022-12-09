@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/azureDataLakeGen2.schema.json
-name: edvanadlsblob_deltatest
+name: edvanadls_deltatest
 type: azure_data_lake_gen2
 description: Deltatest container
-account_name: edvanadlsblob
+account_name: edvanadls
 filesystem: deltatest
