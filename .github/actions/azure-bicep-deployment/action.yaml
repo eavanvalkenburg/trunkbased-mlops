@@ -36,7 +36,7 @@ runs:
           --location ${{ inputs.location }} \
           --template-file ${{ inputs.rgTemplateFile }} \
           --name ${{ inputs.deploymentName }}
-          --parameters '{ \"projectName\": \"${{ inputs.projectName }}\", \"location\": \"${{ inputs.location }}\" }'
+          --parameters '{ "projectName": "${{ inputs.projectName }}", "location": "${{ inputs.location }}" }'
         
         RESOURCE_GROUP=$(az group list --query "[?location=='${{ inputs.location }}']" --tag project=${{ inputs.projectName }} | jq -r '.[0].name')
 
