@@ -31,31 +31,33 @@ runs:
   steps:
     - name: Deploying Bicep templates
       shell: bash
-      run: |
-        az deployment sub create \
-          --location ${{ inputs.location }} \
-          --template-file ${{ inputs.rgTemplateFile }} \
-          --name ${{ inputs.deploymentName }}
-          --parameters projectName=${{ inputs.projectName }} location="${{ inputs.location }}"
+      run: . ${{ github.action_path }}/action.sh "${{ inputs.projectName }}" ${{ inputs.location }} ${{ inputs.deploymentName }} ${{ inputs.rgTemplateFile }} ${{ inputs.workspaceTemplateFile }} ${{ inputs.templateVersion }} ${{ inputs.parameters }}
+      # |
+      #   echo ${{ inputs.location }}
+      #   az deployment sub create \
+      #     --location ${{ inputs.location }} \
+      #     --template-file ${{ inputs.rgTemplateFile }} \
+      #     --name ${{ inputs.deploymentName }}
+      #     --parameters projectName=${{ inputs.projectName }} location=${{ inputs.location }}
         
-        RESOURCE_GROUP=$(az group list --query "[?location=='${{ inputs.location }}']" --tag project=${{ inputs.projectName }} | jq -r '.[0].name')
+      #   RESOURCE_GROUP=$(az group list --query "[?location=='${{ inputs.location }}']" --tag project=${{ inputs.projectName }} | jq -r '.[0].name')
 
-        az ts create --name ${{ inputs.deploymentName }} \
-                     --version "${{ inputs.templateVersion }}" \
-                     --resource-group RESOURCE_GROUP \
-                     --location ${{ inputs.location }} \
-                     --template-file ${{ inputs.workspaceTemplateFile }} \
-                     --yes
+      #   az ts create --name ${{ inputs.deploymentName }} \
+      #                --version "${{ inputs.templateVersion }}" \
+      #                --resource-group RESOURCE_GROUP \
+      #                --location ${{ inputs.location }} \
+      #                --template-file ${{ inputs.workspaceTemplateFile }} \
+      #                --yes
         
-        SPECIFICATION_ID=$(az ts list --resource-group ${{ inputs.resourceGroup }} | jq -r '.[0].id')
+      #   SPECIFICATION_ID=$(az ts list --resource-group ${{ inputs.resourceGroup }} | jq -r '.[0].id')
 
-        if [[ "${{ inputs.parameters }}" == "" ]]; then
-          az deployment group create --resource-group  RESOURCE_GROUP \
-                                     --name deployment01 \
-                                     --template-spec $SPECIFICATION_ID/versions/${{ inputs.templateVersion }}
-        else
-          az deployment group create --resource-group ${{ inputs.resourceGroup }} \
-                                    --name deployment01 \
-                                    --template-spec $SPECIFICATION_ID/versions/${{ inputs.templateVersion }} \
-                                    --parameters ${{ inputs.parameters }}
-        fi
+      #   if [[ "${{ inputs.parameters }}" == "" ]]; then
+      #     az deployment group create --resource-group  RESOURCE_GROUP \
+      #                                --name deployment01 \
+      #                                --template-spec $SPECIFICATION_ID/versions/${{ inputs.templateVersion }}
+      #   else
+      #     az deployment group create --resource-group ${{ inputs.resourceGroup }} \
+      #                               --name deployment01 \
+      #                               --template-spec $SPECIFICATION_ID/versions/${{ inputs.templateVersion }} \
+      #                               --parameters ${{ inputs.parameters }}
+      #   fi
