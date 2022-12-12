@@ -1,10 +1,12 @@
 @description('Name of the project, will feed into all other names.')
 param projectName string
+@description('Name of the Azure Machine Learning workspace, defaults to projectname with -aml appended.')
+param workspaceName string = '${projectName}-aml'
 
 @description('Specifies the location for all resources.')
 param location string = resourceGroup().location
 
-@description('The VM size for the CPU compute train cluster. More details can be found here: https://aka.ms/azureml-vm-details.')
+@description('The VM size for the CPU compute train cluster. More details can be found here: https://aka.ms/azureml-vm-details. Defaults to Standard_D4s_v3.')
 @allowed([
   'Standard_D2s_v3'
   'Standard_D4s_v3'
@@ -16,7 +18,7 @@ param location string = resourceGroup().location
 ])
 param cpuTrainComputeSize string = 'Standard_D4s_v3'
 
-@description('The VM size for the GPU compute train cluster. More details can be found here: https://aka.ms/azureml-vm-details.')
+@description('The VM size for the GPU compute train cluster. More details can be found here: https://aka.ms/azureml-vm-details. Defaults to Standard_NC6s_v3.')
 @allowed([
   'Standard_NC6s_v3'
   'Standard_NC12s_v3'
@@ -28,15 +30,15 @@ param cpuTrainComputeSize string = 'Standard_D4s_v3'
 ])
 param gpuTrainComputeSize string = 'Standard_NC6s_v3'
 
-@description('The maximum number of nodes for the CPU compute train cluster')
+@description('The maximum number of nodes for the CPU compute train cluster, between 1 and 100, defaults to 10.')
 @minValue(1)
 @maxValue(100)
-param cpuTrainNodeCount int
+param cpuTrainNodeCount int = 10
 
-@description('The maximum number of nodes for the CPU compute train cluster')
+@description('The maximum number of nodes for the CPU compute train cluster, between 1 and 12, defaults to 2.')
 @minValue(1)
 @maxValue(12)
-param gpuTrainNodeCount int
+param gpuTrainNodeCount int = 2
 
 @description('The name of the administrator user account which can be used to SSH into nodes. It must only contain lower case alphabetic characters [a-z].')
 @secure()
@@ -50,8 +52,12 @@ param computeAdminUserPassword string
 @secure()
 param secretsManagementObjectId string
 
+// variables 
 var workspaceDeploymentName = 'azureml-${deployment().name}'
-var workspaceName = '${projectName}-aml'
+var tagValues = {
+  workspace: workspaceName
+  project: projectName
+}
 
 module workspaceDeployment 'workspace/workspace.bicep' = {
   name: workspaceDeploymentName
@@ -60,10 +66,8 @@ module workspaceDeployment 'workspace/workspace.bicep' = {
     projectName: projectName
     location: location
     workspaceName: workspaceName
-    tagValues: {
-      workspace: workspaceName
-      project: projectName
-    }
+    secretsManagementObjectId: secretsManagementObjectId
+    tagValues: tagValues
   }
 }
 

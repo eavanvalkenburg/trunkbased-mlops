@@ -1,6 +1,6 @@
-  PROJECTNAME: edvaneml
+  PROJECTNAME: edvanml
   LOCATION: westeurope
-  KEYVAULTNAME: kv-edvaneml-dev
+  KEYVAULTNAME: edvanml-kv
   ENVPREFIX: dev
   MODELNAME: hate-pt-speech
   DESCRIPTION: 'A hate detection model for tweets in portuguese'
