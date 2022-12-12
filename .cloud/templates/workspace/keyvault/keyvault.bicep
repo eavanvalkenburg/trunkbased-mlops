@@ -32,13 +32,13 @@ resource keyvault_existing 'Microsoft.KeyVault/vaults@2022-07-01' existing = if 
   scope: resourceGroup(rg_name)
 }
 
-module auth 'keyvault_authorization.bicep' = {
-  name: keyvaultName
-  scope: resourceGroup(rg_name)
-  params: {
-    keyvaultName: keyvaultName
-    secretsManagementObjectId: secretsManagementObjectId
-  }
-}
+// module auth 'keyvault_authorization.bicep' = {
+//   name: keyvaultName
+//   scope: resourceGroup(rg_name)
+//   params: {
+//     keyvaultName: keyvaultName
+//     secretsManagementObjectId: secretsManagementObjectId
+//   }
+// }
 
 output keyvaultObject object = keyvault_new ?? keyvault_existing
