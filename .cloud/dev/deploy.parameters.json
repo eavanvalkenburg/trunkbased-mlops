@@ -6,16 +6,16 @@
             "value": "edvaneml"
         },
         "cpuTrainComputeSize": {
-            "value": "STANDARD_D12"
+            "value": "Standard_D4s_v3"
         },
         "gpuTrainComputeSize": {
-            "value": "STANDARD_NC6"
+            "value": "Standard_NC6s_v3"
         },
         "cpuTrainNodeCount": {
             "value": 10
         },
         "gpuTrainNodeCount": {
-            "value": 2
+            "value": 3
         }
     }
 }
