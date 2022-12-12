@@ -115,10 +115,10 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2022-10-01' = {
   }
   properties: {
     friendlyName: workspaceName
-    storageAccount: storageAccount.name
-    keyVault: keyvaultName
-    applicationInsights: applicationInsights.name
-    containerRegistry: (empty(containerRegistryName) ? json('null') : containerRegistry.name)
+    storageAccount: storageAccount.id
+    keyVault: kv.outputs.keyvaultObject.id
+    applicationInsights: applicationInsights.id
+    containerRegistry: (empty(containerRegistryName) ? json('null') : containerRegistry.id)
     description: 'Workspace for project: ${projectName}.'
     encryption: {
       status: encryption_status
